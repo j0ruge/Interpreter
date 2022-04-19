@@ -19,13 +19,16 @@ namespace Interpreter
 
         public static void interpret(int[] memory, int starting_address)
         {
-            // Esse procedimento interpreta programas para uma máquina simples com instruções que têm
-            // um operando na memória. A máquina tem um registrador accumulator, usado para
-            // aritmética. A instrução ADD soma um inteiro na memória do AC, por exemplo.
-            // O interpretador continua funcionando até o bit de funcionamento ser desligado pela instrução HALT.
-            // O estado de um processo que roda nessa máquina consiste em memória, o
-            // contador de programa, bit de funcionamento e AC. Os parâmetros de entrada consistem
-            // na imagem da memória e no endereço inicial.
+            /**
+             * Esse procedimento interpreta programas para uma máquina simples com instruções que têm
+             * um operando na memória. A máquina tem um registrador accumulator, usado para
+             * aritmética. A instrução ADD soma um inteiro na memória do accumulator, por exemplo.
+             * O interpretador continua funcionando até o bit de funcionamento ser desligado pela instrução HALT.
+             * O estado de um processo que roda nessa máquina consiste em memória, o
+             * contador de programa, bit de funcionamento e accumulator. Os parâmetros de entrada consistem 
+             * na imagem da memória e no endereço inicial.
+             */
+
             program_counter = starting_address;
             run_bit = true;
             while (run_bit)
