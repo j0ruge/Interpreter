@@ -4,8 +4,11 @@ namespace Interpreter
 {
     class Program
     {
-        static int menu_op = 0;
-        static int code_op = 0;
+        static int menu_op = 0;             //valor para seleção do menu
+        static int code_op = 0;             //valor para seleção da operação
+        static int registrador_a = 0;       //registrador A
+        static int registrador_b = 0;       //registrador B
+        static char reg_op = 'A';           //usado para recursividade das seleções de registrador
 
         static int program_counter; // contador de programa contém endereço da próxima instruction
         static int accumulator; // o acumulador, um registrador para efetuar aritmética
@@ -138,21 +141,23 @@ namespace Interpreter
                 {
                     case 1:
                         Console.Clear();
-                        Console.WriteLine("Definir registrador A");
-                        Console.ReadLine();
+                        reg_op = 'A';
+                        DefinirRegistrador(reg_op);
                         break;
                     case 2:
                         Console.Clear();
-                        Console.WriteLine("Definir registrador B");
-                        Console.ReadLine();
+                        reg_op = 'B';
+                        DefinirRegistrador(reg_op);
                         break;
                     case 3:
                         Console.Clear();
-                        Console.WriteLine("Ler registrador A (Acc)");
+                        reg_op = 'A';
+                        LerRegistrador(reg_op);
                         break;
                     case 4:
                         Console.Clear();
-                        Console.WriteLine("Ler registrador B");
+                        reg_op = 'B';
+                        LerRegistrador(reg_op);
                         break;
                     case 5:
                         Console.Clear();
@@ -164,10 +169,69 @@ namespace Interpreter
                     case 7:
                         Console.Clear();
                         Console.WriteLine("Executar ULA");
+                        Console.WriteLine("Aperte qualquer tecla para contuinuar");
                         Console.ReadLine();
-                        Console.WriteLine("Aperte qualquer teclad para contuinuar");
                         break;
                 }
+            }
+        }
+
+        static void DefinirRegistrador(char reg)
+        {
+            if(reg == 'A')
+            {
+                Console.WriteLine("Definir registrador A");
+
+                var retorno = Console.ReadLine();
+                if (retorno.Length == 0)
+                {
+                    Console.WriteLine("Valor não inserido");
+                    Console.WriteLine("");
+                    DefinirRegistrador(reg_op);
+                }
+                else
+                {
+                    registrador_a = int.Parse(retorno);
+                }
+                    
+            }
+            else
+            {
+                Console.WriteLine("Definir registrador B");
+
+                var retorno = Console.ReadLine();
+                if (retorno.Length == 0)
+                {
+                    Console.WriteLine("Valor não inserido");
+                    Console.WriteLine("");
+                    DefinirRegistrador(reg_op);
+                }
+                else
+                {
+                    registrador_b = int.Parse(retorno);
+                }
+            }
+        }
+
+        static void LerRegistrador(char reg)
+        {
+            if (reg == 'A')
+            {
+                Console.Clear();
+                Console.WriteLine("Ler registrador A");
+                Console.WriteLine($"Valor: {registrador_a}");
+                Console.WriteLine("");
+                Console.WriteLine("Aperte qualquer tecla para contuinuar");
+                Console.ReadLine();
+            }
+            else
+            {
+                Console.Clear();
+                Console.WriteLine("Ler registrador B");
+                Console.WriteLine($"Valor: {registrador_b}");
+                Console.WriteLine("");
+                Console.WriteLine("Aperte qualquer tecla para contuinuar");
+                Console.ReadLine();
             }
         }
 
