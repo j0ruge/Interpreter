@@ -169,7 +169,7 @@ namespace Interpreter
                     case 7:
                         Console.Clear();
                         Console.WriteLine("Executar ULA");
-                        Console.WriteLine("Aperte qualquer tecla para contuinuar");
+                        Console.WriteLine("Aperte qualquer tecla para continuar");
                         Console.ReadLine();
                         break;
                 }
@@ -221,7 +221,7 @@ namespace Interpreter
                 Console.WriteLine("Ler registrador A");
                 Console.WriteLine($"Valor: {registrador_a}");
                 Console.WriteLine("");
-                Console.WriteLine("Aperte qualquer tecla para contuinuar");
+                Console.WriteLine("Aperte qualquer tecla para continuar");
                 Console.ReadLine();
             }
             else
@@ -230,7 +230,7 @@ namespace Interpreter
                 Console.WriteLine("Ler registrador B");
                 Console.WriteLine($"Valor: {registrador_b}");
                 Console.WriteLine("");
-                Console.WriteLine("Aperte qualquer tecla para contuinuar");
+                Console.WriteLine("Aperte qualquer tecla para continuar");
                 Console.ReadLine();
             }
         }
