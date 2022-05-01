@@ -5,17 +5,16 @@ namespace Interpreter
     class Program
     {
         static int menu_op = 0;                 //valor para seleção do menu
-        static string code_op = "000";          //valor para seleção da operação
+        static string code_op = "0000";          //valor para seleção da operação
         static short registrador_a = 0;         //registrador A
         static short registrador_b = 0;         //registrador B
         static char reg_op = 'A';               //usado para recursividade das seleções de registrador
 
-        static bool run_bit = true;            // um bit que pode ser desligado para parar a máquina
+        static bool transbordo = false;
+        static bool negativo = false;
+        static bool zero = false;
 
-        const int CLR = 90;// <-- seta o valor no accumulator para 0
-        const int ADDI = 95;// <-- adiciona o valor x no accumulator
-        const int ADDM = 93;// <-- adiciona o valor da memória y no accumulator
-        const int HALT = 100;// <-- instrução que desliga o processador
+        static bool run_bit = true;            // um bit que pode ser desligado para parar a máquina
 
         static void Main(string[] args)
         {
@@ -53,26 +52,26 @@ namespace Interpreter
                     case 1:
                         Console.Clear();
                         reg_op = 'A';
-                        DefinirRegistrador(reg_op);
+                        DefinirRegistrador();
                         break;
                     case 2:
                         Console.Clear();
                         reg_op = 'B';
-                        DefinirRegistrador(reg_op);
+                        DefinirRegistrador();
                         break;
                     case 3:
                         Console.Clear();
                         reg_op = 'A';
-                        LerRegistrador(reg_op);
+                        LerRegistrador();
                         break;
                     case 4:
                         Console.Clear();
                         reg_op = 'B';
-                        LerRegistrador(reg_op);
+                        LerRegistrador();
                         break;
                     case 5:
                         Console.Clear();
-                        Console.WriteLine("Ler registrador de flags");
+                        RetornarFlags();
                         break;
                     case 6:
                         SelecionarOperacao();
@@ -85,17 +84,15 @@ namespace Interpreter
                         Console.ReadLine();
                         break;
                     case 8:
-                        Console.WriteLine("");
-                        Console.WriteLine("HALT");
                         run_bit = false;
                         break;
                 }
             }
         }
 
-        static void DefinirRegistrador(char reg)
+        static void DefinirRegistrador()
         {
-            if(reg == 'A')
+            if(reg_op == 'A')
             {
                 Console.WriteLine("Definir registrador A => -32768 até 32767");
 
@@ -104,7 +101,7 @@ namespace Interpreter
                 {
                     Console.WriteLine("Valor não inserido");
                     Console.WriteLine("");
-                    DefinirRegistrador(reg_op);
+                    DefinirRegistrador();
                 }
                 else
                 {
@@ -120,7 +117,7 @@ namespace Interpreter
                 {
                     Console.WriteLine("Valor não inserido");
                     Console.WriteLine("");
-                    DefinirRegistrador(reg_op);
+                    DefinirRegistrador();
                 }
                 else
                 {
@@ -129,9 +126,9 @@ namespace Interpreter
             }
         }
 
-        static void LerRegistrador(char reg)
+        static void LerRegistrador()
         {
-            if (reg == 'A')
+            if (reg_op == 'A')
             {
                 Console.Clear();
                 Console.WriteLine("Ler registrador A");
@@ -165,40 +162,53 @@ namespace Interpreter
             Console.WriteLine("  6. A - B");
             Console.WriteLine("  7. A and B");
             Console.WriteLine("  8. A or B");
+            Console.WriteLine("  9. HALT");
             Console.WriteLine("");
             Console.WriteLine("Escolha uma opção =>");
 
             var retorno = Console.ReadLine();
 
-            if (retorno.Length == 0 || int.Parse(retorno) < 1 || int.Parse(retorno) > 8)
+            if (retorno.Length == 0 || int.Parse(retorno) < 1 || int.Parse(retorno) > 9)
                 SelecionarOperacao();
             else
             {
                 switch (int.Parse(retorno))
                 {
+                    //A
                     case 1:
-                        code_op = "000";
+                        code_op = "0000";
                         break;
+                    //B
                     case 2:
-                        code_op = "001";
+                        code_op = "0001";
                         break;
+                    //A + 1
                     case 3:
-                        code_op = "010";
+                        code_op = "0010";
                         break;
+                    //B + 1
                     case 4:
-                        code_op = "011";
+                        code_op = "0011";
                         break;
+                    //A + B
                     case 5:
-                        code_op = "100";
+                        code_op = "0100";
                         break;
+                    //A - B
                     case 6:
-                        code_op = "101";
+                        code_op = "0101";
                         break;
+                    //A and B
                     case 7:
-                        code_op = "110";
+                        code_op = "0110";
                         break;
+                    //A or B
                     case 8:
-                        code_op = "111";
+                        code_op = "0111";
+                        break;
+                    //HALT
+                    case 9:
+                        code_op = "1000";
                         break;
                 }
             }
@@ -209,36 +219,112 @@ namespace Interpreter
         {
             switch (code_op)
             {
-                case "000":
+                case "0000":
                     break;
-                case "001":
+                case "0001":
                     break;
-                case "010":
+                case "0010":
+                    reg_op = 'A';
+                    Incremento();
                     break;
-                case "011":
+                case "0011":
+                    reg_op = 'B';
+                    Incremento();
                     break;
-                case "100":
+                case "0100":
                     Soma();
                     break;
-                case "101":
+                case "0101":
+                    Subtrair();
                     break;
-                case "110":
+                case "0110":
                     break;
-                case "111":
+                case "0111":
+                    break;
+                case "1000":
+                    Halt();
                     break;
             }
         }
 
         private static void Soma()
+        {  
+           int output = registrador_a + registrador_b;
+           ClassificarFlag(output);
+           registrador_a = (short) output;   
+        }
+
+        private static void Subtrair()
         {
-            var output = registrador_a + registrador_b;
+            var output = registrador_a - registrador_b;
             ClassificarFlag(output);
-            registrador_a = (short) output;
+            registrador_a = (short)output;
+        }
+
+        private static void Incremento()
+        {
+            if(reg_op == 'A')
+            {
+                var output = registrador_a += 1;
+                ClassificarFlag(output);
+                registrador_a = output;
+            }
+            else
+            {
+                var output = registrador_b += 1;
+                ClassificarFlag(output);
+                registrador_a = output;
+            }
+        }
+
+        private static void RetornarFlags()
+        {
+            Console.WriteLine("Registrador de Flags");
+            Console.WriteLine("");
+            Console.WriteLine($"Transbordo (Overflow): {transbordo}");
+            Console.WriteLine($"Negativo (Negative): {negativo}");
+            Console.WriteLine($"Zero (Zero): {zero}");
+            Console.WriteLine("");
+            Console.WriteLine("Aperte qualquer tecla para continuar");
+            Console.ReadLine();
+        }
+
+        private static void Halt()
+        {
+            Console.WriteLine("");
+            Console.WriteLine("HALT");
+            run_bit = false;
         }
 
         private static void ClassificarFlag(int valor)
-        {
+        {   
+            if(valor == 0)
+            {
+                zero = true;
+            }
+            else
+            {
+                zero = false;
+            }
 
+            if(valor < 0)
+            {
+                negativo = true;
+            }
+            else
+            {
+                negativo = false;
+            }
+
+            try
+            {
+                Convert.ToInt16(valor);
+                transbordo = false;
+            }
+            catch (OverflowException)
+            {
+                transbordo = true;
+            }
         }
     }
 }
