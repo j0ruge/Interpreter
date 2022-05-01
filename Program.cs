@@ -6,8 +6,8 @@ namespace Interpreter
     {
         static int menu_op = 0;             //valor para seleção do menu
         static int code_op = 0;             //valor para seleção da operação
-        static int registrador_a = 0;       //registrador A
-        static int registrador_b = 0;       //registrador B
+        static int registrador_a = 0;       
+        static int registrador_b = 0;       
         static char reg_op = 'A';           //usado para recursividade das seleções de registrador
 
         static int program_counter; // contador de programa contém endereço da próxima instruction
@@ -18,8 +18,7 @@ namespace Interpreter
         static int data; // mantém o operando corrente
         static bool run_bit = false; // um bit que pode ser desligado para parar a máquina
         const int CLR = 1000;// <-- seta o valor no accumulator para 0
-        const int ADDI = 1005;// <-- adiciona o valor x no accumulator
-        const int ADDM = 1010;// <-- adiciona o valor da memória y no accumulator
+        const int ADD = 000;// <-- adiciona o valor x no accumulator        
         const int HALT = 1100;// <-- instrução que desliga o processador
 
         public static void interpret(int[] memory, int starting_address)
@@ -55,13 +54,9 @@ namespace Interpreter
         }
         private static int find_data(int opcode, int type, int[] memory)
         {
-            if (opcode == ADDI)
+            if (opcode == ADD)
             {
                 return program_counter;
-            }
-            if (opcode == ADDM)
-            {
-                return memory[program_counter];
             }
             else
                 return -1;
@@ -73,16 +68,11 @@ namespace Interpreter
                 accumulator = 0;
                 Console.WriteLine(accumulator);
             }
-            if (instr_type == ADDI)
+            if (instr_type == ADD)
             {
                 accumulator = accumulator + data;
                 Console.WriteLine(accumulator);
-            }
-            if (instr_type == ADDM)
-            {
-                accumulator = accumulator + data;
-                Console.WriteLine(accumulator);
-            }
+            }     
             if (instr_type == HALT)
             {
                 run_bit = false;
@@ -92,22 +82,6 @@ namespace Interpreter
 
         static void Main(string[] args)
         {
-			//int[] m2 = { 2, -5, 15, CLR, // o "programa" inicia aqui
-			//	ADDI, 12, ADDI, 7, ADDM, 0, ADDM, 1, CLR, HALT };
-			//Console.WriteLine("Imagem de memória 1: ");
-			//interpret(m2, 3);// start at CLR
-
-			//int[] m3 = { 1, 3, 5, CLR, // o "programa" inicia aqui
-			//	ADDI, 7, ADDM, 2, CLR, ADDM, 0, ADDM, 1, CLR, HALT };
-			//Console.WriteLine("Imagem de memória 2: ");
-			//interpret(m3, 3); // start at CLR
-
-			//int[] m4 = { 13, -5, 7, 8, CLR,//o "programa" inicia aqui
-			//	         ADDM, 1, 3, ADDM, 1, CLR, HALT
-   //         };
-			//Console.WriteLine("Imagem de memória 3: ");
-			//interpret(m4, 4);
-
             Menu();
         }
 
