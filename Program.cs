@@ -5,7 +5,7 @@ namespace Interpreter
     class Program
     {
         static int menu_op = 0;                 //valor para seleção do menu
-        static int code_op = 000;                 //valor para seleção da operação
+        static string code_op = "000";          //valor para seleção da operação
         static short registrador_a = 0;         //registrador A
         static short registrador_b = 0;         //registrador B
         static char reg_op = 'A';               //usado para recursividade das seleções de registrador
@@ -173,31 +173,71 @@ namespace Interpreter
             if (retorno.Length == 0 || int.Parse(retorno) < 1 || int.Parse(retorno) > 8)
                 SelecionarOperacao();
             else
-                code_op = int.Parse(retorno);
+            {
+                switch (int.Parse(retorno))
+                {
+                    case 1:
+                        code_op = "000";
+                        break;
+                    case 2:
+                        code_op = "001";
+                        break;
+                    case 3:
+                        code_op = "010";
+                        break;
+                    case 4:
+                        code_op = "011";
+                        break;
+                    case 5:
+                        code_op = "100";
+                        break;
+                    case 6:
+                        code_op = "101";
+                        break;
+                    case 7:
+                        code_op = "110";
+                        break;
+                    case 8:
+                        code_op = "111";
+                        break;
+                }
+            }
+                
         }
 
         private static void Execute()
         {
-            
-            //if (code_op == 1)
-            //{
-            //    accumulator = 0;
-            //    Console.WriteLine(accumulator);
-            //}
-            //if (instr_type == ADDI)
-            //{
-            //    accumulator = accumulator + data;
-            //    Console.WriteLine(accumulator);
-            //}
-            //if (instr_type == ADDM)
-            //{
-            //    accumulator = accumulator + data;
-            //    Console.WriteLine(accumulator);
-            //}
-            //if (instr_type == HALT)
-            //{
-            //    run_bit = false;
-            //}
+            switch (code_op)
+            {
+                case "000":
+                    break;
+                case "001":
+                    break;
+                case "010":
+                    break;
+                case "011":
+                    break;
+                case "100":
+                    Soma();
+                    break;
+                case "101":
+                    break;
+                case "110":
+                    break;
+                case "111":
+                    break;
+            }
+        }
+
+        private static void Soma()
+        {
+            var output = registrador_a + registrador_b;
+            ClassificarFlag(output);
+            registrador_a = (short) output;
+        }
+
+        private static void ClassificarFlag(int valor)
+        {
 
         }
     }
