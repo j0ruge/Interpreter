@@ -4,6 +4,8 @@ namespace Interpreter
 {
     class Program
     {
+        static int menu_op = 0;
+        static int code_op = 0;
 
         static int program_counter; // contador de programa contém endereço da próxima instruction
         static int accumulator; // o acumulador, um registrador para efetuar aritmética
@@ -87,21 +89,111 @@ namespace Interpreter
 
         static void Main(string[] args)
         {
-			int[] m2 = { 2, -5, 15, CLR, // o "programa" inicia aqui
-				ADDI, 12, ADDI, 7, ADDM, 0, ADDM, 1, CLR, HALT };
-			Console.WriteLine("Imagem de memória 1: ");
-			interpret(m2, 3);// start at CLR
+			//int[] m2 = { 2, -5, 15, CLR, // o "programa" inicia aqui
+			//	ADDI, 12, ADDI, 7, ADDM, 0, ADDM, 1, CLR, HALT };
+			//Console.WriteLine("Imagem de memória 1: ");
+			//interpret(m2, 3);// start at CLR
 
-			int[] m3 = { 1, 3, 5, CLR, // o "programa" inicia aqui
-				ADDI, 7, ADDM, 2, CLR, ADDM, 0, ADDM, 1, CLR, HALT };
-			Console.WriteLine("Imagem de memória 2: ");
-			interpret(m3, 3); // start at CLR
+			//int[] m3 = { 1, 3, 5, CLR, // o "programa" inicia aqui
+			//	ADDI, 7, ADDM, 2, CLR, ADDM, 0, ADDM, 1, CLR, HALT };
+			//Console.WriteLine("Imagem de memória 2: ");
+			//interpret(m3, 3); // start at CLR
 
-			int[] m4 = { 13, -5, 7, 8, CLR,//o "programa" inicia aqui
-				         ADDM, 1, 3, ADDM, 1, CLR, HALT
-            };
-			Console.WriteLine("Imagem de memória 3: ");
-			interpret(m4, 4);			
+			//int[] m4 = { 13, -5, 7, 8, CLR,//o "programa" inicia aqui
+			//	         ADDM, 1, 3, ADDM, 1, CLR, HALT
+   //         };
+			//Console.WriteLine("Imagem de memória 3: ");
+			//interpret(m4, 4);
+
+            Menu();
+        }
+
+        static void Menu()
+        {
+            while (menu_op != 8)
+            {
+                Console.Clear();
+                Console.WriteLine("");
+                Console.WriteLine("Menu Principal da ULA");
+                Console.WriteLine("");
+                Console.WriteLine("  1. Definir registrador A");
+                Console.WriteLine("  2. Definir registrador B");
+                Console.WriteLine("  3. Ler registrador A (Acc)");
+                Console.WriteLine("  4. Ler registrador B");
+                Console.WriteLine("  5. Ler registrador de flags");
+                Console.WriteLine("  6. Definir operação");
+                Console.WriteLine("  7. Executar ULA");
+                Console.WriteLine("  8. Sair");
+                Console.WriteLine("");
+                Console.WriteLine("Escolha uma opção =>");
+
+                var retorno = Console.ReadLine();
+
+                if (retorno.Length == 0 || int.Parse(retorno) < 1 || int.Parse(retorno) > 8)
+                    Menu();
+                else
+                    menu_op = int.Parse(retorno);
+
+                switch (menu_op)
+                {
+                    case 1:
+                        Console.Clear();
+                        Console.WriteLine("Definir registrador A");
+                        Console.ReadLine();
+                        break;
+                    case 2:
+                        Console.Clear();
+                        Console.WriteLine("Definir registrador B");
+                        Console.ReadLine();
+                        break;
+                    case 3:
+                        Console.Clear();
+                        Console.WriteLine("Ler registrador A (Acc)");
+                        break;
+                    case 4:
+                        Console.Clear();
+                        Console.WriteLine("Ler registrador B");
+                        break;
+                    case 5:
+                        Console.Clear();
+                        Console.WriteLine("Ler registrador de flags");
+                        break;
+                    case 6:
+                        Operacao();
+                        break;
+                    case 7:
+                        Console.Clear();
+                        Console.WriteLine("Executar ULA");
+                        Console.ReadLine();
+                        Console.WriteLine("Aperte qualquer teclad para contuinuar");
+                        break;
+                }
+            }
+        }
+
+        static void Operacao()
+        {
+            Console.Clear();
+            Console.WriteLine("");
+            Console.WriteLine("Definir operação");
+            Console.WriteLine("");
+            Console.WriteLine("  1. A");
+            Console.WriteLine("  2. B");
+            Console.WriteLine("  3. A + 1");
+            Console.WriteLine("  4. B + 1");
+            Console.WriteLine("  5. A + B");
+            Console.WriteLine("  6. A - B");
+            Console.WriteLine("  7. A and B");
+            Console.WriteLine("  8. A or B");
+            Console.WriteLine("");
+            Console.WriteLine("Escolha uma opção =>");
+
+            var retorno = Console.ReadLine();
+
+            if (retorno.Length == 0 || int.Parse(retorno) < 1 || int.Parse(retorno) > 8)
+                Operacao();
+            else
+                code_op = int.Parse(retorno);
         }
     }
 }
