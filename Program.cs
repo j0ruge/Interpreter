@@ -6,13 +6,16 @@ namespace Interpreter
     {
         static int menu_op = 0;                 //valor para seleção do menu
         static string code_op = "0000";          //valor para seleção da operação
-        static short registrador_a = 0;         //registrador A
-        static short registrador_b = 0;         //registrador B
+        static short registrador_a = 0;         
+        static short registrador_b = 0;         
         static char reg_op = 'A';               //usado para recursividade das seleções de registrador
 
-        static bool transbordo = false;
-        static bool negativo = false;
-        static bool zero = false;
+        static bool flag_transbordo = false;
+        static bool flag_negativo = false;
+        static bool flag_zero = false;
+
+
+        const string ADD = "0100"; 
 
         static bool run_bit = true;            // um bit que pode ser desligado para parar a máquina
 
@@ -94,7 +97,7 @@ namespace Interpreter
         {
             if(reg_op == 'A')
             {
-                Console.WriteLine("Definir registrador A => -32768 até 32767");
+                Console.WriteLine("Definir registrador A => Valores válidos, -32768 até 32767");
 
                 var retorno = Console.ReadLine();
                 if (retorno.Length == 0)
@@ -110,7 +113,7 @@ namespace Interpreter
             }
             else
             {
-                Console.WriteLine("Definir registrador B => -32768 até 32767");
+                Console.WriteLine("Definir registrador B => Valores válidos, -32768 até 32767");
 
                 var retorno = Console.ReadLine();
                 if (retorno.Length == 0)
@@ -189,10 +192,9 @@ namespace Interpreter
                     //B + 1
                     case 4:
                         code_op = "0011";
-                        break;
-                    //A + B
+                        break;                    
                     case 5:
-                        code_op = "0100";
+                        code_op = ADD; //Saída A + B
                         break;
                     //A - B
                     case 6:
@@ -281,9 +283,9 @@ namespace Interpreter
         {
             Console.WriteLine("Registrador de Flags");
             Console.WriteLine("");
-            Console.WriteLine($"Transbordo (Overflow): {transbordo}");
-            Console.WriteLine($"Negativo (Negative): {negativo}");
-            Console.WriteLine($"Zero (Zero): {zero}");
+            Console.WriteLine($"Transbordo (Overflow): {flag_transbordo}");
+            Console.WriteLine($"Negativo (Negative): {flag_negativo}");
+            Console.WriteLine($"Zero (Zero): {flag_zero}");
             Console.WriteLine("");
             Console.WriteLine("Aperte qualquer tecla para continuar");
             Console.ReadLine();
@@ -300,30 +302,30 @@ namespace Interpreter
         {   
             if(valor == 0)
             {
-                zero = true;
+                flag_zero = true;
             }
             else
             {
-                zero = false;
+                flag_zero = false;
             }
 
             if(valor < 0)
             {
-                negativo = true;
+                flag_negativo = true;
             }
             else
             {
-                negativo = false;
+                flag_negativo = false;
             }
 
             try
             {
                 Convert.ToInt16(valor);
-                transbordo = false;
+                flag_transbordo = false;
             }
             catch (OverflowException)
             {
-                transbordo = true;
+                flag_transbordo = true;
             }
         }
     }
