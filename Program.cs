@@ -14,8 +14,10 @@ namespace Interpreter
         static bool flag_negativo = false;
         static bool flag_zero = false;
 
+        #region => ALU operation codes (opcodes)
+        const string ADD = "0100";
+        #endregion => ALU operation codes (opcodes)
 
-        const string ADD = "0100"; 
 
         static bool run_bit = true;            // um bit que pode ser desligado para parar a máquina
 
