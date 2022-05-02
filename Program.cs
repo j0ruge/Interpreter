@@ -21,6 +21,8 @@ namespace Interpreter
         const string CLEAR = "0000";
         const string INCREMENT_A = "0010";
         const string INCREMENT_B = "0011";
+        const string AND = "0110";
+        const string OR = "0111";
         #endregion => ALU operation codes (opcodes)
 
 
@@ -170,8 +172,8 @@ namespace Interpreter
             Console.WriteLine("  4. INCREMENT B");
             Console.WriteLine("  5. ADDITION");
             Console.WriteLine("  6. SUBTRACTION");
-            Console.WriteLine("  7. A and B");
-            Console.WriteLine("  8. A or B");
+            Console.WriteLine("  7. AND");
+            Console.WriteLine("  8. OR");
             Console.WriteLine("  9. HALT");
             Console.WriteLine("");
             Console.WriteLine("Escolha uma opção =>");
@@ -207,11 +209,11 @@ namespace Interpreter
                         break;
                     //A and B
                     case 7:
-                        code_op = "0110";
+                        code_op = AND;
                         break;
                     //A or B
                     case 8:
-                        code_op = "0111";
+                        code_op = OR;
                         break;                    
                     case 9:
                         code_op = HALT;
@@ -230,7 +232,7 @@ namespace Interpreter
                     break;
                 case "0001":
                     break;
-                case "0010":
+                case INCREMENT_A:
                     reg_op = 'A';
                     Incremento();
                     break;
@@ -244,9 +246,9 @@ namespace Interpreter
                 case SUBTRACTION:
                     Subtrair();
                     break;
-                case "0110":
+                case AND:
                     break;
-                case "0111":
+                case OR:
                     break;
                 case HALT:
                     Halt();
