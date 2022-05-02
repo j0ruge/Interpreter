@@ -15,7 +15,12 @@ namespace Interpreter
         static bool flag_zero = false;
 
         #region => ALU operation codes (opcodes)
-        const string ADD = "0100";
+        const string ADDITION = "0100";
+        const string SUBTRACTION = "0101";
+        const string HALT = "1000";
+        const string CLEAR = "0000";
+        const string INCREMENT_A = "0010";
+        const string INCREMENT_B = "0011";
         #endregion => ALU operation codes (opcodes)
 
 
@@ -159,12 +164,12 @@ namespace Interpreter
             Console.WriteLine("");
             Console.WriteLine("Definir operação");
             Console.WriteLine("");
-            Console.WriteLine("  1. A");
+            Console.WriteLine("  1. CLEAR");
             Console.WriteLine("  2. B");
-            Console.WriteLine("  3. A + 1");
-            Console.WriteLine("  4. B + 1");
-            Console.WriteLine("  5. A + B");
-            Console.WriteLine("  6. A - B");
+            Console.WriteLine("  3. INCREMENT A");
+            Console.WriteLine("  4. INCREMENT B");
+            Console.WriteLine("  5. ADDITION");
+            Console.WriteLine("  6. SUBTRACTION");
             Console.WriteLine("  7. A and B");
             Console.WriteLine("  8. A or B");
             Console.WriteLine("  9. HALT");
@@ -181,26 +186,24 @@ namespace Interpreter
                 {
                     //A
                     case 1:
-                        code_op = "0000";
+                        code_op = CLEAR;
                         break;
                     //B
                     case 2:
                         code_op = "0001";
                         break;
-                    //A + 1
+                    //
                     case 3:
-                        code_op = "0010";
-                        break;
-                    //B + 1
+                        code_op = INCREMENT_A; // Saída A + 1
+                        break;                    
                     case 4:
-                        code_op = "0011";
+                        code_op = INCREMENT_B; //B + 1
                         break;                    
                     case 5:
-                        code_op = ADD; //Saída A + B
-                        break;
-                    //A - B
+                        code_op = ADDITION; //Saída A + B
+                        break;                    
                     case 6:
-                        code_op = "0101";
+                        code_op = SUBTRACTION; //Saída A - B
                         break;
                     //A and B
                     case 7:
@@ -209,10 +212,9 @@ namespace Interpreter
                     //A or B
                     case 8:
                         code_op = "0111";
-                        break;
-                    //HALT
+                        break;                    
                     case 9:
-                        code_op = "1000";
+                        code_op = HALT;
                         break;
                 }
             }
@@ -223,7 +225,8 @@ namespace Interpreter
         {
             switch (code_op)
             {
-                case "0000":
+                case CLEAR:
+                    Clear();
                     break;
                 case "0001":
                     break;
@@ -231,26 +234,34 @@ namespace Interpreter
                     reg_op = 'A';
                     Incremento();
                     break;
-                case "0011":
+                case INCREMENT_B:
                     reg_op = 'B';
                     Incremento();
                     break;
-                case "0100":
+                case ADDITION:
                     Soma();
                     break;
-                case "0101":
+                case SUBTRACTION:
                     Subtrair();
                     break;
                 case "0110":
                     break;
                 case "0111":
                     break;
-                case "1000":
+                case HALT:
                     Halt();
                     break;
             }
         }
 
+        private static void Clear()
+        {
+            registrador_a = 0;
+            registrador_b = 0;
+            flag_transbordo = false;
+            flag_negativo = false;
+            flag_zero = false;
+        }
         private static void Soma()
         {  
            int output = registrador_a + registrador_b;
