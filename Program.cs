@@ -5,28 +5,29 @@ namespace Interpreter
     class Program
     {
         static int menu_op = 0;                 //valor para seleção do menu
-        static string code_op = "0000";          //valor para seleção da operação
+        static string code_op = "0000";         //valor para seleção da operação
         static short registrador_a = 0;         
         static short registrador_b = 0;         
         static char reg_op = 'A';               //usado para recursividade das seleções de registrador
+        static bool run_bit = true;             //um bit que pode ser desligado para parar a máquina
 
+        #region => flags
         static bool flag_transbordo = false;
         static bool flag_negativo = false;
         static bool flag_zero = false;
+        #endregion => flags
 
         #region => ALU operation codes (opcodes)
-        const string ADDITION = "0100";
-        const string SUBTRACTION = "0101";
-        const string HALT = "1000";
-        const string CLEAR = "0000";
-        const string INCREMENT_A = "0010";
-        const string INCREMENT_B = "0011";
-        const string AND = "0110";
-        const string OR = "0111";
+        const string ADDITION =     "0100";
+        const string SUBTRACTION =  "0101";
+        const string HALT =         "1000";
+        const string CLEAR =        "0000";
+        const string INCREMENT_A =  "0010";
+        const string INCREMENT_B =  "0011";
+        const string AND =          "0110";
+        const string OR =           "0111";
         #endregion => ALU operation codes (opcodes)
 
-
-        static bool run_bit = true;            // um bit que pode ser desligado para parar a máquina
 
         static void Main(string[] args)
         {
