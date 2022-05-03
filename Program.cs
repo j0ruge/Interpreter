@@ -195,7 +195,6 @@ namespace Interpreter
                     case 2:
                         code_op = "0001";
                         break;
-                    //
                     case 3:
                         code_op = INCREMENT_A; // Saída A + 1
                         break;                    
