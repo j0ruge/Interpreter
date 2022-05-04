@@ -5,7 +5,7 @@ namespace Interpreter
     class Program
     {
         static int menu_op = 0;                 //valor para seleção do menu
-        static string code_op = "0000";         //valor para seleção da operação
+        static string opcode = "0000";         //valor para seleção da operação
         static short registrador_a = 0;         
         static short registrador_b = 0;         
         static char reg_op = 'A';               //usado para recursividade das seleções de registrador
@@ -18,16 +18,16 @@ namespace Interpreter
         #endregion => flags
 
         #region => ALU operation codes (opcodes)
-        const string CLEAR =        "0000";
-        const string B =            "0001";     //passthrough do registrador b
-        const string INCREMENT_A =  "0010";
-        const string INCREMENT_B =  "0011";
-        const string ADDITION =     "0100";
-        const string SUBTRACTION =  "0101";
-        const string AND =          "0110";
-        const string OR =           "0111";
-        const string ZERO =         "1000";
-        const string HALT =         "1111";
+        const string CLEAR =            "0000";
+        const string PASSTHROUGH_B =    "0001";
+        const string INCREMENT_A =      "0010";
+        const string INCREMENT_B =      "0011";
+        const string ADDITION =         "0100";
+        const string SUBTRACTION =      "0101";
+        const string AND =              "0110";
+        const string OR =               "0111";
+        const string ZERO =             "1000";
+        const string HALT =             "1111";
         #endregion => ALU operation codes (opcodes)
 
 
@@ -170,7 +170,7 @@ namespace Interpreter
             Console.WriteLine("Definir operação");
             Console.WriteLine("");
             Console.WriteLine("  0. CLEAR");
-            Console.WriteLine("  1. B");
+            Console.WriteLine("  1. PASSTHROUGH B");
             Console.WriteLine("  2. INCREMENT A");
             Console.WriteLine("  3. INCREMENT B");
             Console.WriteLine("  4. ADDITION");
@@ -192,37 +192,37 @@ namespace Interpreter
                 {
                     //A
                     case 0:
-                        code_op = CLEAR;
+                        opcode = CLEAR;
                         break;
                     //B
                     case 1:
-                        code_op = B;
+                        opcode = PASSTHROUGH_B;
                         break;
                     case 2:
-                        code_op = INCREMENT_A; // Saída A + 1
+                        opcode = INCREMENT_A; // Saída A + 1
                         break;                    
                     case 3:
-                        code_op = INCREMENT_B; //B + 1
+                        opcode = INCREMENT_B; //B + 1
                         break;                    
                     case 4:
-                        code_op = ADDITION; //Saída A + B
+                        opcode = ADDITION; //Saída A + B
                         break;                    
                     case 5:
-                        code_op = SUBTRACTION; //Saída A - B
+                        opcode = SUBTRACTION; //Saída A - B
                         break;
                     //A and B
                     case 6:
-                        code_op = AND;
+                        opcode = AND;
                         break;
                     //A or B
                     case 7:
-                        code_op = OR;
+                        opcode = OR;
                         break;                    
                     case 8:
-                        code_op = ZERO;
+                        opcode = ZERO;
                         break;
                     case 9:
-                        code_op = HALT;
+                        opcode = HALT;
                         break;
                 }
             }
@@ -231,12 +231,12 @@ namespace Interpreter
 
         private static void Execute()
         {
-            switch (code_op)
+            switch (opcode)
             {
                 case CLEAR:
                     Clear();
                     break;
-                case B:
+                case PASSTHROUGH_B:
                     Atravessar();
                     break;
                 case INCREMENT_A:
@@ -268,7 +268,7 @@ namespace Interpreter
 
         private static void Clear()
         {
-            code_op = "0000";
+            opcode = "0000";
             registrador_a = 0;
             registrador_b = 0;
             flag_transbordo = false;
