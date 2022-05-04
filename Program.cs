@@ -18,14 +18,16 @@ namespace Interpreter
         #endregion => flags
 
         #region => ALU operation codes (opcodes)
-        const string ADDITION =     "0100";
-        const string SUBTRACTION =  "0101";
-        const string HALT =         "1000";
         const string CLEAR =        "0000";
+        const string B =            "0001";     //passthrough do registrador b
         const string INCREMENT_A =  "0010";
         const string INCREMENT_B =  "0011";
+        const string ADDITION =     "0100";
+        const string SUBTRACTION =  "0101";
         const string AND =          "0110";
         const string OR =           "0111";
+        const string ZERO =         "1000";
+        const string HALT =         "1111";
         #endregion => ALU operation codes (opcodes)
 
 
@@ -167,54 +169,58 @@ namespace Interpreter
             Console.WriteLine("");
             Console.WriteLine("Definir operação");
             Console.WriteLine("");
-            Console.WriteLine("  1. CLEAR");
-            Console.WriteLine("  2. B");
-            Console.WriteLine("  3. INCREMENT A");
-            Console.WriteLine("  4. INCREMENT B");
-            Console.WriteLine("  5. ADDITION");
-            Console.WriteLine("  6. SUBTRACTION");
-            Console.WriteLine("  7. AND");
-            Console.WriteLine("  8. OR");
+            Console.WriteLine("  0. CLEAR");
+            Console.WriteLine("  1. B");
+            Console.WriteLine("  2. INCREMENT A");
+            Console.WriteLine("  3. INCREMENT B");
+            Console.WriteLine("  4. ADDITION");
+            Console.WriteLine("  5. SUBTRACTION");
+            Console.WriteLine("  6. AND");
+            Console.WriteLine("  7. OR");
+            Console.WriteLine("  8. ZERO");
             Console.WriteLine("  9. HALT");
             Console.WriteLine("");
             Console.WriteLine("Escolha uma opção =>");
 
             var retorno = Console.ReadLine();
 
-            if (retorno.Length == 0 || int.Parse(retorno) < 1 || int.Parse(retorno) > 9)
+            if (retorno.Length == 0 || int.Parse(retorno) < 0 || int.Parse(retorno) > 9)
                 SelecionarOperacao();
             else
             {
                 switch (int.Parse(retorno))
                 {
                     //A
-                    case 1:
+                    case 0:
                         code_op = CLEAR;
                         break;
                     //B
-                    case 2:
-                        code_op = "0001";
+                    case 1:
+                        code_op = B;
                         break;
-                    case 3:
+                    case 2:
                         code_op = INCREMENT_A; // Saída A + 1
                         break;                    
-                    case 4:
+                    case 3:
                         code_op = INCREMENT_B; //B + 1
                         break;                    
-                    case 5:
+                    case 4:
                         code_op = ADDITION; //Saída A + B
                         break;                    
-                    case 6:
+                    case 5:
                         code_op = SUBTRACTION; //Saída A - B
                         break;
                     //A and B
-                    case 7:
+                    case 6:
                         code_op = AND;
                         break;
                     //A or B
-                    case 8:
+                    case 7:
                         code_op = OR;
                         break;                    
+                    case 8:
+                        code_op = ZERO;
+                        break;
                     case 9:
                         code_op = HALT;
                         break;
@@ -230,7 +236,8 @@ namespace Interpreter
                 case CLEAR:
                     Clear();
                     break;
-                case "0001":
+                case B:
+                    Atravessar();
                     break;
                 case INCREMENT_A:
                     reg_op = 'A';
@@ -250,6 +257,9 @@ namespace Interpreter
                     break;
                 case OR:
                     break;
+                case ZERO:
+                    Zero();
+                    break;
                 case HALT:
                     Halt();
                     break;
@@ -258,6 +268,7 @@ namespace Interpreter
 
         private static void Clear()
         {
+            code_op = "0000";
             registrador_a = 0;
             registrador_b = 0;
             flag_transbordo = false;
@@ -292,6 +303,20 @@ namespace Interpreter
                 ClassificarFlag(output);
                 registrador_a = output;
             }
+        }
+
+        private static void Atravessar()
+        {
+            //PASS THROUGH
+            var output = registrador_b;
+            registrador_a = output;
+        }
+
+        private static void Zero()
+        {
+            var output = registrador_a;
+            ClassificarFlag(registrador_a);
+            registrador_a = output;
         }
 
         private static void RetornarFlags()
