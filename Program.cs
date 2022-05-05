@@ -15,6 +15,8 @@ namespace Interpreter
         static bool flag_transbordo = false;
         static bool flag_negativo = false;
         static bool flag_zero = false;
+        static bool flag_maior_que = false;
+        static bool flag_menor_que = false;
         #endregion => flags
 
         #region => ALU operation codes (opcodes)
@@ -27,6 +29,8 @@ namespace Interpreter
         const string AND =              "0110";
         const string OR =               "0111";
         const string ZERO =             "1000";
+        const string GREATER_AB =       "1001";
+        const string LOWER_AB =         "1010";
         const string HALT =             "1111";
         #endregion => ALU operation codes (opcodes)
 
@@ -169,22 +173,24 @@ namespace Interpreter
             Console.WriteLine("");
             Console.WriteLine("Definir operação");
             Console.WriteLine("");
-            Console.WriteLine("  0. CLEAR");
-            Console.WriteLine("  1. PASSTHROUGH B");
-            Console.WriteLine("  2. INCREMENT A");
-            Console.WriteLine("  3. INCREMENT B");
-            Console.WriteLine("  4. ADDITION");
-            Console.WriteLine("  5. SUBTRACTION");
-            Console.WriteLine("  6. AND");
-            Console.WriteLine("  7. OR");
-            Console.WriteLine("  8. ZERO");
-            Console.WriteLine("  9. HALT");
+            Console.WriteLine("  0.  CLEAR");
+            Console.WriteLine("  1.  PASSTHROUGH B");
+            Console.WriteLine("  2.  INCREMENT A");
+            Console.WriteLine("  3.  INCREMENT B");
+            Console.WriteLine("  4.  ADDITION");
+            Console.WriteLine("  5.  SUBTRACTION");
+            Console.WriteLine("  6.  AND");
+            Console.WriteLine("  7.  OR");
+            Console.WriteLine("  8.  ZERO");
+            Console.WriteLine("  9.  GREATER AB");
+            Console.WriteLine("  10. LOWER AB");
+            Console.WriteLine("  11. HALT");
             Console.WriteLine("");
             Console.WriteLine("Escolha uma opção =>");
 
             var retorno = Console.ReadLine();
 
-            if (retorno.Length == 0 || int.Parse(retorno) < 0 || int.Parse(retorno) > 9)
+            if (retorno.Length == 0 || int.Parse(retorno) < 0 || int.Parse(retorno) > 11)
                 SelecionarOperacao();
             else
             {
@@ -222,6 +228,12 @@ namespace Interpreter
                         opcode = ZERO;
                         break;
                     case 9:
+                        opcode = GREATER_AB;
+                        break;
+                    case 10:
+                        opcode = LOWER_AB;
+                        break;
+                    case 11:
                         opcode = HALT;
                         break;
                 }
@@ -259,6 +271,12 @@ namespace Interpreter
                     break;
                 case ZERO:
                     Zero();
+                    break;
+                case GREATER_AB:
+                    MaiorQue();
+                    break;
+                case LOWER_AB:
+                    MenorQue();
                     break;
                 case HALT:
                     Halt();
@@ -319,6 +337,18 @@ namespace Interpreter
             registrador_a = output;
         }
 
+        private static void MaiorQue()
+        {
+            flag_maior_que = registrador_a > registrador_b;
+            flag_menor_que = flag_maior_que ? false : flag_menor_que;
+        }
+
+        private static void MenorQue()
+        {
+            flag_menor_que = registrador_a < registrador_b;
+            flag_maior_que = flag_menor_que ? false : flag_maior_que;
+        }
+
         private static void RetornarFlags()
         {
             Console.WriteLine("Registrador de Flags");
@@ -326,6 +356,8 @@ namespace Interpreter
             Console.WriteLine($"Transbordo (Overflow): {flag_transbordo}");
             Console.WriteLine($"Negativo (Negative): {flag_negativo}");
             Console.WriteLine($"Zero (Zero): {flag_zero}");
+            Console.WriteLine($"Maior Que (Greater then): {flag_maior_que}");
+            Console.WriteLine($"Menor Que (Lower then): {flag_menor_que}");
             Console.WriteLine("");
             Console.WriteLine("Aperte qualquer tecla para continuar");
             Console.ReadLine();
