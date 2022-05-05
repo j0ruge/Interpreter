@@ -28,9 +28,10 @@ namespace Interpreter
         const string SUBTRACTION =      "0101";
         const string AND =              "0110";
         const string OR =               "0111";
-        const string ZERO =             "1000";
-        const string GREATER_AB =       "1001";
-        const string LOWER_AB =         "1010";
+        const string XOR =              "1000";
+        const string ZERO =             "1001";
+        const string GREATER_AB =       "1010";
+        const string LOWER_AB =         "1011";
         const string HALT =             "1111";
         #endregion => ALU operation codes (opcodes)
 
@@ -181,16 +182,17 @@ namespace Interpreter
             Console.WriteLine("  5.  SUBTRACTION");
             Console.WriteLine("  6.  AND");
             Console.WriteLine("  7.  OR");
-            Console.WriteLine("  8.  ZERO");
-            Console.WriteLine("  9.  GREATER AB");
-            Console.WriteLine("  10. LOWER AB");
-            Console.WriteLine("  11. HALT");
+            Console.WriteLine("  8.  XOR");
+            Console.WriteLine("  9.  ZERO");
+            Console.WriteLine("  10. GREATER AB");
+            Console.WriteLine("  11. LOWER AB");
+            Console.WriteLine("  12. HALT");
             Console.WriteLine("");
             Console.WriteLine("Escolha uma opção =>");
 
             var retorno = Console.ReadLine();
 
-            if (retorno.Length == 0 || int.Parse(retorno) < 0 || int.Parse(retorno) > 11)
+            if (retorno.Length == 0 || int.Parse(retorno) < 0 || int.Parse(retorno) > 12)
                 SelecionarOperacao();
             else
             {
@@ -223,17 +225,20 @@ namespace Interpreter
                     //A or B
                     case 7:
                         opcode = OR;
-                        break;                    
+                        break;
                     case 8:
-                        opcode = ZERO;
+                        opcode = XOR;
                         break;
                     case 9:
-                        opcode = GREATER_AB;
+                        opcode = ZERO;
                         break;
                     case 10:
-                        opcode = LOWER_AB;
+                        opcode = GREATER_AB;
                         break;
                     case 11:
+                        opcode = LOWER_AB;
+                        break;
+                    case 12:
                         opcode = HALT;
                         break;
                 }
@@ -266,8 +271,13 @@ namespace Interpreter
                     Subtrair();
                     break;
                 case AND:
+                    And();
                     break;
                 case OR:
+                    Or();
+                    break;
+                case XOR:
+                    Xor();
                     break;
                 case ZERO:
                     Zero();
@@ -328,6 +338,23 @@ namespace Interpreter
             //PASS THROUGH
             var output = registrador_b;
             registrador_a = output;
+        }
+
+        private static void And()
+        {
+            var output = registrador_a & registrador_b;
+            registrador_a = (short) output;
+        }
+
+        private static void Or()
+        {
+            var output = registrador_a | registrador_b;
+            registrador_a = (short)output;
+        }
+        private static void Xor()
+        {
+            var output = registrador_a ^ registrador_b;
+            registrador_a = (short)output;
         }
 
         private static void Zero()
