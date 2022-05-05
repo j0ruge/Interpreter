@@ -301,7 +301,7 @@ namespace Interpreter
             {
                 var output = registrador_b += 1;
                 ClassificarFlag(output);
-                registrador_a = output;
+                registrador_b = output;
             }
         }
 
