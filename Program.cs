@@ -1,107 +1,151 @@
 ﻿using System;
+using System.Linq;
 
 namespace Interpreter
 {
     class Program
     {
+        static int programCounter = 0;
+        static bool run_bit = true; //um bit que pode ser desligado para parar a máquina
 
-        static int program_counter; // contador de programa contém endereço da próxima instruction
-        static int accumulator; // o acumulador, um registrador para efetuar aritmética
-        static int instruction; // um registrador para conter a instrução corrente
-        static int instr_type; // o tipo da instrução (opcode)
-        static int data_loc; // o endereço dos dados, ou –1 se nenhum
-        static int data; // mantém o operando corrente
-        static bool run_bit = false; // um bit que pode ser desligado para parar a máquina
-        const int CLR = 1000;// <-- seta o valor no accumulator para 0
-        const int ADDI = 1005;// <-- adiciona o valor x no accumulator
-        const int ADDM = 1010;// <-- adiciona o valor da memória y no accumulator
-        const int HALT = 1100;// <-- instrução que desliga o processador
+        static string registrador_A = "0000";
+        static string registrador_B = "0000";
 
-        public static void interpret(int[] memory, int starting_address)
+        const string SUB = "1000";
+        const string ADD = "1001";
+        const string HALT = "1111";
+
+        //4 Bits Instructions
+
+        //ADD Reg_A = 5 + Reg_B = 7 
+        static string[] M1 = 
         {
-            /**
-             * Esse procedimento interpreta programas para uma máquina simples com instruções que têm
-             * um operando na memória. A máquina tem um registrador accumulator, usado para
-             * aritmética. A instrução ADD soma um inteiro na memória do accumulator, por exemplo.
-             * O interpretador continua funcionando até o bit de funcionamento ser desligado pela instrução HALT.
-             * O estado de um processo que roda nessa máquina consiste em memória, o
-             * contador de programa, bit de funcionamento e accumulator. Os parâmetros de entrada consistem 
-             * na imagem da memória e no endereço inicial.
-             */
+            "1001",
+            "0110",
+            "0111",
+            "1111",
+            "0000",
+            "0000",
+            "0101",
+            "0111"
+        };
 
-            program_counter = starting_address;
-            run_bit = true;
-            while (run_bit)
-            {
-                instruction = memory[program_counter]; // busca a próxima instrução e armazena em instruction
-                program_counter = program_counter + 1; // incrementa contador de programa
-                instr_type = get_instr_type(instruction); // determina tipo da instrução
-                data_loc = find_data(instruction, instr_type, memory); // localiza dados (–1 se nenhum)
-                if (data_loc >= 0) // se data_loc é –1, não há nenhum operando
-                { data = memory[data_loc]; } // busca os dados
-                execute(instr_type, data); // executa instrução
-            }
-        }
-
-
-        private static int get_instr_type(int opcode)
+        //ADD Reg_A = 5 + Reg_B = 7 
+        static string[] M2 =
         {
-            return opcode;
-        }
-        private static int find_data(int opcode, int type, int[] memory)
-        {
-            if (opcode == ADDI)
-            {
-                return program_counter;
-            }
-            if (opcode == ADDM)
-            {
-                return memory[program_counter];
-            }
-            else
-                return -1;
-        }
-        private static void execute(int instr_type, int data)
-        {
-            if (instr_type == CLR)
-            {
-                accumulator = 0;
-                Console.WriteLine(accumulator);
-            }
-            if (instr_type == ADDI)
-            {
-                accumulator = accumulator + data;
-                Console.WriteLine(accumulator);
-            }
-            if (instr_type == ADDM)
-            {
-                accumulator = accumulator + data;
-                Console.WriteLine(accumulator);
-            }
-            if (instr_type == HALT)
-            {
-                run_bit = false;
-            }
+            "1000",
+            "0110",
+            "0111",
+            "1111",
+            "0000",
+            "0000",
+            "1111",
+            "1000"
+        };
 
-        }
+        static string[] memory = M2;
 
         static void Main(string[] args)
         {
-			int[] m2 = { 2, -5, 15, CLR, // o "programa" inicia aqui
-				ADDI, 12, ADDI, 7, ADDM, 0, ADDM, 1, CLR, HALT };
-			Console.WriteLine("Imagem de memória 1: ");
-			interpret(m2, 3);// start at CLR
+            //INICIO CICLO
+            while (run_bit)
+            {
+                var value = GetMemoryCell(memory, programCounter);
+                programCounter++;
+                SelectOpCode(value);
+            }
+        }
 
-			int[] m3 = { 1, 3, 5, CLR, // o "programa" inicia aqui
-				ADDI, 7, ADDM, 2, CLR, ADDM, 0, ADDM, 1, CLR, HALT };
-			Console.WriteLine("Imagem de memória 2: ");
-			interpret(m3, 3); // start at CLR
+        static void SelectOpCode(string opCode)
+        {
+            switch (opCode)
+            {
+                case SUB:
+                    Console.WriteLine("SUBTRAIR A - B");
+                    Sub();
+                    break;
+                case ADD:
+                    Console.WriteLine("ADICIONAR A + B");
+                    Add();
+                    break;
+                case HALT:
+                    Console.WriteLine("HALT");
+                    Halt();
+                    break;
+            }
+        }
 
-			int[] m4 = { 13, -5, 7, 8, CLR,//o "programa" inicia aqui
-				         ADDM, 1, 3, ADDM, 1, CLR, HALT
-            };
-			Console.WriteLine("Imagem de memória 3: ");
-			interpret(m4, 4);			
+        static void Add()
+        {
+            var enderecoA = Convert.ToInt16(GetMemoryCell(memory, programCounter), 2); //Valor endereco em decimal
+            Console.WriteLine("Endereco_Pos: " + enderecoA);
+            registrador_A = GetMemoryCell(memory, enderecoA);
+            Console.WriteLine("Reg_A: " + registrador_A);
+
+            programCounter++;
+            var enderecoB = Convert.ToInt16(GetMemoryCell(memory, programCounter), 2); //Valor endereco em decimal
+            Console.WriteLine("Endereco_Pos: " + enderecoB);
+            registrador_B = GetMemoryCell(memory, enderecoB);
+            Console.WriteLine("Reg_B: " + registrador_B);
+
+            var resultado = Convert.ToInt16(registrador_A, 2) + Convert.ToInt16(registrador_B, 2);
+
+            //ACC
+            registrador_A = Convert.ToString(Math.Abs(resultado), 2).PadLeft(4, '0');
+            Console.WriteLine("Reg_A (Acc): " + registrador_A);
+        }
+
+        static void Sub()
+        {
+            var enderecoA = Convert.ToInt16(GetMemoryCell(memory, programCounter), 2); //Valor endereco em decimal
+            registrador_A = GetMemoryCell(memory, enderecoA);
+            Console.WriteLine("Reg_A: " + registrador_A);
+
+            programCounter++;
+            var enderecoB = Convert.ToInt16(GetMemoryCell(memory, programCounter), 2); //Valor endereco em decimal
+            registrador_B = GetMemoryCell(memory, enderecoB);
+            Console.WriteLine("Reg_B: " + registrador_B);
+
+            var resultado = Convert.ToInt16(registrador_A, 2) - Convert.ToInt16(registrador_B, 2);
+
+            //ACC
+            registrador_A = Convert.ToString(Math.Abs(resultado), 2).PadLeft(4,'0');
+            Console.WriteLine("Reg_A (Acc): " + registrador_A);
+        }
+
+        static void Jump()
+        {
+            
+        }
+
+        static void Halt()
+        {
+            run_bit = false;
+        }
+
+        //static byte[] GetOpCode(byte[] memory)
+        //{
+        //    var opCode = new byte[memory.Length / 2];
+        //    for(int i = 0; i < memory.Length / 2; i++)
+        //    {
+        //        opCode[i] = memory[i];
+        //    }
+        //    return opCode;
+        //}
+
+        //static byte[] GetValue(byte[] memory)
+        //{
+        //    var value = new byte[memory.Length / 2];
+        //    for (int i = 0; i < memory.Length / 2; i++)
+        //    {
+        //        value[i] = memory[i + (memory.Length / 2)];
+        //    }
+        //    return value;
+        //}
+
+        static string GetMemoryCell(string[] memory, int rowNumber)
+        {            
+            return memory[rowNumber];
         }
     }
 }
