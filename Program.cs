@@ -66,7 +66,6 @@ namespace Interpreter
             while (run_bit)
             {
                 instructorRegister = GetMemoryCell(memory, programCounter);
-                programCounter++;
                 SelectOpCode(instructorRegister);
             }
 
@@ -79,11 +78,15 @@ namespace Interpreter
             {
                 case SUB:
                     Console.WriteLine("SUBTRAIR A - B");
+                    programCounter++;
                     Sub();
+                    programCounter++;
                     break;
                 case ADD:
                     Console.WriteLine("ADICIONAR A + B");
+                    programCounter++;
                     Add();
+                    programCounter++;
                     break;
                 case HALT:
                     Console.WriteLine("HALT");
@@ -217,6 +220,10 @@ namespace Interpreter
             {
                 Console.WriteLine($"MEM[{i}] {memory[i]}");
             }
+            Console.WriteLine();
+            Console.WriteLine($"Transbordo (Overflow): {flag_transbordo}");
+            Console.WriteLine($"Negativo (Negative): {flag_negativo}");
+            Console.WriteLine($"Zero (Zero): {flag_zero}");
         }
     }
 }
