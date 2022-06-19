@@ -111,8 +111,21 @@ namespace Interpreter
             "0000"
         };
 
+        //INCREMENT_A CLEAR
+        static string[] M7 =
+        {
+            "0110",
+            "0110",
+            "0111",
+            "0111",
+            "1111",
+            "0000",
+            "1011",
+            "0000"
+        };
+
         //SELECIONA O CONJUNTO DE MEMORIA QUE IRA SER EXECUTADO
-        static string[] memory = M1;
+        static string[] memory = M7;
 
         static void Main(string[] args)
         {
