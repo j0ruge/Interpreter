@@ -116,6 +116,11 @@ namespace Interpreter
 
         static void Main(string[] args)
         {
+            PrintMemory(memory, "INICIAL");
+
+            Console.WriteLine("== EXECUÇÃO ==");
+            Console.WriteLine();
+
             //INICIO CICLO
             while (run_bit)
             {
@@ -123,7 +128,13 @@ namespace Interpreter
                 SelectOpCode(instructorRegister);
             }
 
-            PrintMemory(memory);
+            Console.WriteLine();
+            Console.WriteLine("== FIM EXECUÇÃO ==");
+            Console.WriteLine();
+
+            PrintMemory(memory, "FINAL");
+
+            PrintFlags();
         }
 
         static void SelectOpCode(string opCode)
@@ -406,17 +417,30 @@ namespace Interpreter
             }
         }
 
-        private static void PrintMemory(string[] memory)
+        private static void PrintMemory(string[] memory, string momento)
         {
+            Console.WriteLine($"== MEMÓRIA {momento} ==");
             Console.WriteLine();
-            for(int i = 0; i < memory.Length; i++)
+
+            for (int i = 0; i < memory.Length; i++)
             {
                 Console.WriteLine($"MEM[{i}] {memory[i]}");
             }
             Console.WriteLine();
+            Console.WriteLine($"== FIM MEMÓRIA {momento} ==");
+            Console.WriteLine();
+        }
+
+        private static void PrintFlags()
+        {
+            Console.WriteLine("== FLAGS ==");
+            Console.WriteLine();
             Console.WriteLine($"Transbordo (Overflow): {flag_transbordo}");
             Console.WriteLine($"Negativo (Negative): {flag_negativo}");
             Console.WriteLine($"Zero (Zero): {flag_zero}");
+            Console.WriteLine();
+            Console.WriteLine("== FIM FLAGS ==");
+            Console.WriteLine();
         }
     }
 }
