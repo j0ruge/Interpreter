@@ -112,11 +112,13 @@ namespace Interpreter
         };
 
         //SELECIONA O CONJUNTO DE MEMORIA QUE IRA SER EXECUTADO
-        static string[] memory = M6;
+        static string[] memory = M1;
 
         static void Main(string[] args)
         {
             PrintMemory(memory, "INICIAL");
+            PrintFlags("INICIAL");
+            PrintRegister("INICIAL");
 
             Console.WriteLine("== EXECUÇÃO ==");
             Console.WriteLine();
@@ -133,8 +135,8 @@ namespace Interpreter
             Console.WriteLine();
 
             PrintMemory(memory, "FINAL");
-
-            PrintFlags();
+            PrintFlags("FINAL");
+            PrintRegister("FINAL");
         }
 
         static void SelectOpCode(string opCode)
@@ -390,9 +392,7 @@ namespace Interpreter
             flag_transbordo = false;
             flag_negativo = false;
             flag_zero = false;
-        }
-
-      
+        }      
 
         //Utilizado para pegar a célula de memória desejada
         static string GetMemoryCell(string[] memory, int rowNumber)
@@ -453,15 +453,27 @@ namespace Interpreter
             Console.WriteLine();
         }
 
-        private static void PrintFlags()
+        private static void PrintFlags(string momento)
         {
-            Console.WriteLine("== FLAGS ==");
+            Console.WriteLine($"== FLAGS {momento} ==");
             Console.WriteLine();
             Console.WriteLine($"Transbordo (Overflow): {flag_transbordo}");
             Console.WriteLine($"Negativo (Negative): {flag_negativo}");
             Console.WriteLine($"Zero (Zero): {flag_zero}");
             Console.WriteLine();
-            Console.WriteLine("== FIM FLAGS ==");
+            Console.WriteLine($"== FIM FLAGS {momento} ==");
+            Console.WriteLine();
+        }
+
+        private static void PrintRegister(string momento)
+        {
+            Console.WriteLine($"== REGISTRADORES {momento} ==");
+            Console.WriteLine();
+            Console.WriteLine($"REGISTRADOR_A: {registrador_A}");
+            Console.WriteLine($"REGISTRADOR_B: {registrador_B}");
+            Console.WriteLine($"IR: {instructorRegister}");
+            Console.WriteLine();
+            Console.WriteLine($"== FIM REGISTRADORES {momento} ==");
             Console.WriteLine();
         }
     }
