@@ -4,11 +4,12 @@ namespace Interpreter
 {
     class Program
     {
-        static int programCounter = 0;
+        
         static string instructorRegister = "0000";
         static bool run_bit = true; //um bit que pode ser desligado para parar a máquina
 
         #region Registers
+        static int programCounter = 0;
         static string registrador_A = "0000";
         static string registrador_B = "0000";
         #endregion
@@ -17,7 +18,7 @@ namespace Interpreter
         const string ADD = "0001";
         const string SUB = "0010";
         const string AND = "0011";
-        const string OR = "0100";
+        const string OR  = "0100";
         const string XOR = "0101";
         const string INCREMENT_A = "0110";
         const string CLEAR = "0111";
