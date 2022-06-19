@@ -125,7 +125,7 @@ namespace Interpreter
         };
 
         //SELECIONA O CONJUNTO DE MEMORIA QUE IRA SER EXECUTADO
-        static string[] memory = M7;
+        static string[] memory = M1;
 
         static void Main(string[] args)
         {
