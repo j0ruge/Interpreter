@@ -150,6 +150,10 @@ namespace Interpreter
             PrintMemory(memory, "FINAL");
             PrintFlags("FINAIS");
             PrintRegisters("FINAIS");
+            
+            Console.WriteLine();
+            Console.WriteLine("Aperte qualquer tecla para continuar");
+            Console.ReadLine();
         }
 
         static void SelectOpCode(string opCode)
