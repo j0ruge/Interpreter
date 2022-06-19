@@ -130,8 +130,8 @@ namespace Interpreter
         static void Main(string[] args)
         {
             PrintMemory(memory, "INICIAL");
-            PrintFlags("INICIAL");
-            PrintRegister("INICIAL");
+            PrintFlags("INICIAIS");
+            PrintRegisters("INICIAIS");
 
             Console.WriteLine("== EXECUÇÃO ==");
             Console.WriteLine();
@@ -149,7 +149,7 @@ namespace Interpreter
 
             PrintMemory(memory, "FINAL");
             PrintFlags("FINAL");
-            PrintRegister("FINAL");
+            PrintRegisters("FINAL");
         }
 
         static void SelectOpCode(string opCode)
@@ -478,7 +478,7 @@ namespace Interpreter
             Console.WriteLine();
         }
 
-        private static void PrintRegister(string momento)
+        private static void PrintRegisters(string momento)
         {
             Console.WriteLine($"== REGISTRADORES {momento} ==");
             Console.WriteLine();
