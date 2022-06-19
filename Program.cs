@@ -148,8 +148,8 @@ namespace Interpreter
             Console.WriteLine();
 
             PrintMemory(memory, "FINAL");
-            PrintFlags("FINAL");
-            PrintRegisters("FINAL");
+            PrintFlags("FINAIS");
+            PrintRegisters("FINAIS");
         }
 
         static void SelectOpCode(string opCode)
