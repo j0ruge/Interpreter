@@ -177,6 +177,11 @@ namespace Interpreter
                     IncrementA();
                     programCounter++;
                     break;
+                case CLEAR:
+                    Console.WriteLine("CLEAR");
+                    programCounter++;
+                    Clear();
+                    break;
                 case HALT:
                     Console.WriteLine("HALT");
                     Halt();
@@ -371,6 +376,23 @@ namespace Interpreter
         {
             run_bit = false;
         }
+
+        static void Clear()
+        {
+            ReturnOriginalState();
+        }
+
+        static void ReturnOriginalState()
+        {
+            registrador_A = "0000";
+            registrador_B = "0000";
+            instructorRegister = "0000";
+            flag_transbordo = false;
+            flag_negativo = false;
+            flag_zero = false;
+        }
+
+      
 
         //Utilizado para pegar a célula de memória desejada
         static string GetMemoryCell(string[] memory, int rowNumber)
