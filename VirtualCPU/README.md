@@ -23,6 +23,24 @@ No código fonte, existem 7 módulos de memória contendo instruções cujo pode
 
 ----
 
+### MENU DE EXECUÇÃO
+
+
+```
+Menu Principal da Maquina Virtual
+
+  1. M1 => ADD Reg_A Reg_B
+  2. M2 => SUB Reg_A Reg_B
+  3. M3 => AND Reg_A Reg_B
+  4. M4 => OR Reg_A Reg_B
+  5. M5 => XOR Reg_A Reg_B
+  6. M6 => INCREMENT_A
+  7. M7 => INCREMENT_A CLEAR
+
+Escolha um setup de memória =>
+```
+
+
 ### EXEMPLO DE EXECUÇÃO
 
 ```
