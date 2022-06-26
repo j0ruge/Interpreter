@@ -21,6 +21,7 @@ No código fonte, existem 7 módulos de memória contendo instruções cujo pode
 |M6  |INCREMENT_A|
 |M7  |INCREMENT_A com CLEAR|
 
+----
 
 ### EXEMPLO DE EXECUÇÃO
 
