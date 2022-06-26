@@ -4,6 +4,8 @@ Aqui está o projeto de Máquina virtual (CPU) do curso de Arquitetura de Comput
 * Brenno de C.P.F. Sciammarella
 * Jorge Luis de Oliveira Ferrari
 
+----
+
 **OBS**:
 No código fonte, existem 7 módulos de memória contendo instruções cujo podem ser alteradas na linha 128, para M1, M2, M3, M4, M5, M6, M7.<br>
 
