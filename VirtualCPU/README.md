@@ -27,7 +27,9 @@ No código fonte, existem 7 módulos de memória contendo instruções cujo pode
 
 ```
 
-== MEMÓRIA INICIAL ==
+M1 => ADD Reg_A Reg_B
+
+== MEMORIA INICIAL ==
 
 MEM[0] 0001
 MEM[1] 0110
@@ -38,7 +40,7 @@ MEM[5] 0000
 MEM[6] 1000
 MEM[7] 0011
 
-== FIM MEMÓRIA INICIAL ==
+== FIM MEMORIA INICIAL ==
 
 == FLAGS INICIAIS ==
 
@@ -56,7 +58,7 @@ IR: 0000
 
 == FIM REGISTRADORES INICIAIS ==
 
-== EXECUÇÃO ==
+== EXECUÇAO ==
 
 ADD A B
 Endereco_Pos: 6
@@ -66,9 +68,9 @@ Reg_B: 0011
 Reg_A (Acc): 1011
 HALT
 
-== FIM EXECUÇÃO ==
+== FIM EXECUÇAO ==
 
-== MEMÓRIA FINAL ==
+== MEMORIA FINAL ==
 
 MEM[0] 0001
 MEM[1] 0110
@@ -79,7 +81,7 @@ MEM[5] 0000
 MEM[6] 1000
 MEM[7] 1011
 
-== FIM MEMÓRIA FINAL ==
+== FIM MEMORIA FINAL ==
 
 == FLAGS FINAIS ==
 
@@ -96,6 +98,7 @@ REGISTRADOR_B: 0011
 IR: 1111
 
 == FIM REGISTRADORES FINAIS ==
+
 
 Aperte qualquer tecla para continuar
 ```
