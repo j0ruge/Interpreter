@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Interpreter
+namespace VirtualCPU
 {
     class Program
     {
