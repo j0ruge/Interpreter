@@ -9,13 +9,13 @@ No código fonte, existem 7 módulos de memória contendo instruções cujo pode
 
 | Memória | Operação | 
 |---------|----------|
-| M1 ->   | ADD      |
-|M2 -> |SUD|
-|M3 -> |AND|
-|M4 -> |OR|
-|M5 -> |XOR|
-|M6 -> |INCREMENT_A|
-|M7 -> |INCREMENT_A com CLEAR|
+| M1    | ADD      |
+|M2  |SUD|
+|M3  |AND|
+|M4  |OR|
+|M5  |XOR|
+|M6  |INCREMENT_A|
+|M7  |INCREMENT_A com CLEAR|
 
 ```
 EXEMPLO DE EXECUÇÃO
