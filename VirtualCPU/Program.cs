@@ -145,7 +145,7 @@ namespace VirtualCPU
 
             var retorno = Console.ReadLine();
 
-            if (retorno.Length == 0 || int.Parse(retorno) < 1 || int.Parse(retorno) > 8)
+            if (retorno.Length == 0 || int.Parse(retorno) < 1 || int.Parse(retorno) > 7)
                 Main();
             else
                 menuOp = int.Parse(retorno);
