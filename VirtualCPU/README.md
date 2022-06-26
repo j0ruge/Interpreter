@@ -1,4 +1,22 @@
+Aqui está o projeto de Máquina virtual (CPU) do curso de Arquitetura de Computadores ministrado pelo mestre Miguel Angelo Zaccur de Figueiredo
 
+Alunos:
+Brenno de C.P.F. Sciammarella
+Jorge Luis de Oliveira Ferrari
+
+OBS:
+No código fonte, existem 7 módulos de memória contendo instruções cujo podem ser alteradas na linha 128, para
+M1, M2, M3, M4, M5, M6, M7.
+
+M1 -> ADD
+M2 -> SUD
+M3 -> AND
+M4 -> OR
+M5 -> XOR
+M6 -> INCREMENT_A
+M7 -> INCREMENT_A com CLEAR
+
+EXEMPLO DE EXECUÇÃO
 
 == MEMÓRIA INICIAL ==
 
