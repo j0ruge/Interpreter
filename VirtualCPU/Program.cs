@@ -124,12 +124,11 @@ namespace VirtualCPU
             "0000"
         };
 
-        //SELECIONA O CONJUNTO DE MEMORIA QUE IRA SER EXECUTADO
-        static string[] memory = M1;
+        static string[] selectedMemorySetup = M1;
 
         static void Main(string[] args)
         {
-            PrintMemory(memory, "INICIAL");
+            PrintMemory(selectedMemorySetup, "INICIAL");
             PrintFlags("INICIAIS");
             PrintRegisters("INICIAIS");
 
@@ -139,7 +138,7 @@ namespace VirtualCPU
             //INICIO CICLO
             while (run_bit)
             {
-                instructorRegister = GetMemoryCell(memory, programCounter);
+                instructorRegister = GetMemoryCell(selectedMemorySetup, programCounter);
                 SelectOpCode(instructorRegister);
             }
 
@@ -147,7 +146,7 @@ namespace VirtualCPU
             Console.WriteLine("== FIM EXECUÇÃO ==");
             Console.WriteLine();
 
-            PrintMemory(memory, "FINAL");
+            PrintMemory(selectedMemorySetup, "FINAL");
             PrintFlags("FINAIS");
             PrintRegisters("FINAIS");
             
@@ -211,17 +210,17 @@ namespace VirtualCPU
         static void Add()
         {
             //Obter valor registrador A
-            var enderecoA = Convert.ToInt16(GetMemoryCell(memory, programCounter), 2); //Valor endereco em decimal
+            var enderecoA = Convert.ToInt16(GetMemoryCell(selectedMemorySetup, programCounter), 2); //Valor endereco em decimal
             Console.WriteLine("Endereco_Pos: " + enderecoA);
-            registrador_A = GetMemoryCell(memory, enderecoA);
+            registrador_A = GetMemoryCell(selectedMemorySetup, enderecoA);
             Console.WriteLine("Reg_A: " + registrador_A);
 
             programCounter++;
 
             //Obter valor registrador B
-            var enderecoB = Convert.ToInt16(GetMemoryCell(memory, programCounter), 2); //Valor endereco em decimal
+            var enderecoB = Convert.ToInt16(GetMemoryCell(selectedMemorySetup, programCounter), 2); //Valor endereco em decimal
             Console.WriteLine("Endereco_Pos: " + enderecoB);
-            registrador_B = GetMemoryCell(memory, enderecoB);
+            registrador_B = GetMemoryCell(selectedMemorySetup, enderecoB);
             Console.WriteLine("Reg_B: " + registrador_B);
 
             var resultado = Convert.ToInt16(registrador_A, 2) + Convert.ToInt16(registrador_B, 2);
@@ -236,22 +235,22 @@ namespace VirtualCPU
             programCounter++;
 
             //GUARDAR VALOR DO RESULTADO NA MEMORIA
-            var enderecoGuardar = Convert.ToInt16(GetMemoryCell(memory, programCounter), 2); //Valor endereco em decimal
-            SetMemoryCell(memory, enderecoGuardar, registrador_A);
+            var enderecoGuardar = Convert.ToInt16(GetMemoryCell(selectedMemorySetup, programCounter), 2); //Valor endereco em decimal
+            SetMemoryCell(selectedMemorySetup, enderecoGuardar, registrador_A);
         }
 
         static void Sub()
         {
             //Obter valor registrador A
-            var enderecoA = Convert.ToInt16(GetMemoryCell(memory, programCounter), 2); //Valor endereco em decimal
-            registrador_A = GetMemoryCell(memory, enderecoA);
+            var enderecoA = Convert.ToInt16(GetMemoryCell(selectedMemorySetup, programCounter), 2); //Valor endereco em decimal
+            registrador_A = GetMemoryCell(selectedMemorySetup, enderecoA);
             Console.WriteLine("Reg_A: " + registrador_A);
 
             programCounter++;
 
             //Obter valor registrador B
-            var enderecoB = Convert.ToInt16(GetMemoryCell(memory, programCounter), 2); //Valor endereco em decimal
-            registrador_B = GetMemoryCell(memory, enderecoB);
+            var enderecoB = Convert.ToInt16(GetMemoryCell(selectedMemorySetup, programCounter), 2); //Valor endereco em decimal
+            registrador_B = GetMemoryCell(selectedMemorySetup, enderecoB);
             Console.WriteLine("Reg_B: " + registrador_B);
 
             var resultado = Convert.ToInt16(registrador_A, 2) - Convert.ToInt16(registrador_B, 2);
@@ -266,24 +265,24 @@ namespace VirtualCPU
             programCounter++;
 
             //GUARDAR VALOR DO RESULTADO NA MEMORIA
-            var enderecoGuardar = Convert.ToInt16(GetMemoryCell(memory, programCounter), 2); //Valor endereco em decimal
-            SetMemoryCell(memory, enderecoGuardar, registrador_A);
+            var enderecoGuardar = Convert.ToInt16(GetMemoryCell(selectedMemorySetup, programCounter), 2); //Valor endereco em decimal
+            SetMemoryCell(selectedMemorySetup, enderecoGuardar, registrador_A);
         }
 
         static void And()
         {
             //Obter valor registrador A
-            var enderecoA = Convert.ToInt16(GetMemoryCell(memory, programCounter), 2); //Valor endereco em decimal
+            var enderecoA = Convert.ToInt16(GetMemoryCell(selectedMemorySetup, programCounter), 2); //Valor endereco em decimal
             Console.WriteLine("Endereco_Pos: " + enderecoA);
-            registrador_A = GetMemoryCell(memory, enderecoA);
+            registrador_A = GetMemoryCell(selectedMemorySetup, enderecoA);
             Console.WriteLine("Reg_A: " + registrador_A);
 
             programCounter++;
 
             //Obter valor registrador B
-            var enderecoB = Convert.ToInt16(GetMemoryCell(memory, programCounter), 2); //Valor endereco em decimal
+            var enderecoB = Convert.ToInt16(GetMemoryCell(selectedMemorySetup, programCounter), 2); //Valor endereco em decimal
             Console.WriteLine("Endereco_Pos: " + enderecoB);
-            registrador_B = GetMemoryCell(memory, enderecoB);
+            registrador_B = GetMemoryCell(selectedMemorySetup, enderecoB);
             Console.WriteLine("Reg_B: " + registrador_B);
 
             var resultado = Convert.ToInt16(registrador_A, 2) & Convert.ToInt16(registrador_B, 2);
@@ -298,24 +297,24 @@ namespace VirtualCPU
             programCounter++;
 
             //GUARDAR VALOR DO RESULTADO NA MEMORIA
-            var enderecoGuardar = Convert.ToInt16(GetMemoryCell(memory, programCounter), 2); //Valor endereco em decimal
-            SetMemoryCell(memory, enderecoGuardar, registrador_A);
+            var enderecoGuardar = Convert.ToInt16(GetMemoryCell(selectedMemorySetup, programCounter), 2); //Valor endereco em decimal
+            SetMemoryCell(selectedMemorySetup, enderecoGuardar, registrador_A);
         }
 
         static void Or()
         {
             //Obter valor registrador A
-            var enderecoA = Convert.ToInt16(GetMemoryCell(memory, programCounter), 2); //Valor endereco em decimal
+            var enderecoA = Convert.ToInt16(GetMemoryCell(selectedMemorySetup, programCounter), 2); //Valor endereco em decimal
             Console.WriteLine("Endereco_Pos: " + enderecoA);
-            registrador_A = GetMemoryCell(memory, enderecoA);
+            registrador_A = GetMemoryCell(selectedMemorySetup, enderecoA);
             Console.WriteLine("Reg_A: " + registrador_A);
 
             programCounter++;
 
             //Obter valor registrador B
-            var enderecoB = Convert.ToInt16(GetMemoryCell(memory, programCounter), 2); //Valor endereco em decimal
+            var enderecoB = Convert.ToInt16(GetMemoryCell(selectedMemorySetup, programCounter), 2); //Valor endereco em decimal
             Console.WriteLine("Endereco_Pos: " + enderecoB);
-            registrador_B = GetMemoryCell(memory, enderecoB);
+            registrador_B = GetMemoryCell(selectedMemorySetup, enderecoB);
             Console.WriteLine("Reg_B: " + registrador_B);
 
             var resultado = Convert.ToInt16(registrador_A, 2) | Convert.ToInt16(registrador_B, 2);
@@ -330,24 +329,24 @@ namespace VirtualCPU
             programCounter++;
 
             //GUARDAR VALOR DO RESULTADO NA MEMORIA
-            var enderecoGuardar = Convert.ToInt16(GetMemoryCell(memory, programCounter), 2); //Valor endereco em decimal
-            SetMemoryCell(memory, enderecoGuardar, registrador_A);
+            var enderecoGuardar = Convert.ToInt16(GetMemoryCell(selectedMemorySetup, programCounter), 2); //Valor endereco em decimal
+            SetMemoryCell(selectedMemorySetup, enderecoGuardar, registrador_A);
         }
 
         static void Xor()
         {
             //Obter valor registrador A
-            var enderecoA = Convert.ToInt16(GetMemoryCell(memory, programCounter), 2); //Valor endereco em decimal
+            var enderecoA = Convert.ToInt16(GetMemoryCell(selectedMemorySetup, programCounter), 2); //Valor endereco em decimal
             Console.WriteLine("Endereco_Pos: " + enderecoA);
-            registrador_A = GetMemoryCell(memory, enderecoA);
+            registrador_A = GetMemoryCell(selectedMemorySetup, enderecoA);
             Console.WriteLine("Reg_A: " + registrador_A);
 
             programCounter++;
 
             //Obter valor registrador B
-            var enderecoB = Convert.ToInt16(GetMemoryCell(memory, programCounter), 2); //Valor endereco em decimal
+            var enderecoB = Convert.ToInt16(GetMemoryCell(selectedMemorySetup, programCounter), 2); //Valor endereco em decimal
             Console.WriteLine("Endereco_Pos: " + enderecoB);
-            registrador_B = GetMemoryCell(memory, enderecoB);
+            registrador_B = GetMemoryCell(selectedMemorySetup, enderecoB);
             Console.WriteLine("Reg_B: " + registrador_B);
 
             var resultado = Convert.ToInt16(registrador_A, 2) ^ Convert.ToInt16(registrador_B, 2);
@@ -362,16 +361,16 @@ namespace VirtualCPU
             programCounter++;
 
             //GUARDAR VALOR DO RESULTADO NA MEMORIA
-            var enderecoGuardar = Convert.ToInt16(GetMemoryCell(memory, programCounter), 2); //Valor endereco em decimal
-            SetMemoryCell(memory, enderecoGuardar, registrador_A);
+            var enderecoGuardar = Convert.ToInt16(GetMemoryCell(selectedMemorySetup, programCounter), 2); //Valor endereco em decimal
+            SetMemoryCell(selectedMemorySetup, enderecoGuardar, registrador_A);
         }
 
         static void IncrementA()
         {
             //Obter valor registrador A
-            var enderecoA = Convert.ToInt16(GetMemoryCell(memory, programCounter), 2); //Valor endereco em decimal
+            var enderecoA = Convert.ToInt16(GetMemoryCell(selectedMemorySetup, programCounter), 2); //Valor endereco em decimal
             Console.WriteLine("Endereco_Pos: " + enderecoA);
-            registrador_A = GetMemoryCell(memory, enderecoA);
+            registrador_A = GetMemoryCell(selectedMemorySetup, enderecoA);
             Console.WriteLine("Reg_A: " + registrador_A);
 
             programCounter++;
@@ -387,8 +386,8 @@ namespace VirtualCPU
             Console.WriteLine("Reg_A (Acc): " + registrador_A);
 
             //GUARDAR VALOR DO RESULTADO NA MEMORIA
-            var enderecoGuardar = Convert.ToInt16(GetMemoryCell(memory, programCounter), 2); //Valor endereco em decimal
-            SetMemoryCell(memory, enderecoGuardar, registrador_A);
+            var enderecoGuardar = Convert.ToInt16(GetMemoryCell(selectedMemorySetup, programCounter), 2); //Valor endereco em decimal
+            SetMemoryCell(selectedMemorySetup, enderecoGuardar, registrador_A);
         }
 
         static void Halt()
