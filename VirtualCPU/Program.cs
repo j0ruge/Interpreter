@@ -4,6 +4,7 @@ namespace VirtualCPU
 {
     class Program
     {
+        static int menuOp = -1;
         
         static string instructorRegister = "0000";
         static bool run_bit = true; //um bit que pode ser desligado para parar a máquina
@@ -126,7 +127,84 @@ namespace VirtualCPU
 
         static string[] selectedMemorySetup = M1;
 
-        static void Main(string[] args)
+        static void Main()
+        {
+            Console.Clear();
+            Console.WriteLine("");
+            Console.WriteLine("Menu Principal da Maquina Virtual");
+            Console.WriteLine("");
+            Console.WriteLine("  1. M1 => ADD Reg_A Reg_B");
+            Console.WriteLine("  2. M2 => SUB Reg_A Reg_B");
+            Console.WriteLine("  3. M3 => AND Reg_A Reg_B");
+            Console.WriteLine("  4. M4 => OR Reg_A Reg_B");
+            Console.WriteLine("  5. M5 => XOR Reg_A Reg_B");
+            Console.WriteLine("  6. M6 => INCREMENT_A");
+            Console.WriteLine("  7. M7 => INCREMENT_A CLEAR");
+            Console.WriteLine("");
+            Console.WriteLine("Escolha um setup de memória =>");
+
+            var retorno = Console.ReadLine();
+
+            if (retorno.Length == 0 || int.Parse(retorno) < 1 || int.Parse(retorno) > 8)
+                Main();
+            else
+                menuOp = int.Parse(retorno);
+
+            switch (menuOp)
+            {
+                case 1:
+                    Console.Clear();
+                    Console.WriteLine("M1 => ADD Reg_A Reg_B");
+                    Console.WriteLine();
+                    selectedMemorySetup = M1;
+                    Programa();
+                    break;
+                case 2:
+                    Console.Clear();
+                    Console.WriteLine("M2 => SUB Reg_A Reg_B");
+                    Console.WriteLine();
+                    selectedMemorySetup = M2;
+                    Programa();
+                    break;
+                case 3:
+                    Console.Clear();
+                    Console.WriteLine("M3 => AND Reg_A Reg_B");
+                    Console.WriteLine();
+                    selectedMemorySetup = M3;
+                    Programa();
+                    break;
+                case 4:
+                    Console.Clear();
+                    Console.WriteLine("M4 => OR Reg_A Reg_B");
+                    Console.WriteLine();
+                    selectedMemorySetup = M4;
+                    Programa();
+                    break;
+                case 5:
+                    Console.Clear();
+                    Console.WriteLine("M5 => XOR Reg_A Reg_B");
+                    Console.WriteLine();
+                    selectedMemorySetup = M5;
+                    Programa();
+                    break;
+                case 6:
+                    Console.Clear();
+                    Console.WriteLine("M6 => INCREMENT_A");
+                    Console.WriteLine();
+                    selectedMemorySetup = M6;
+                    Programa();
+                    break;
+                case 7:
+                    Console.Clear();
+                    Console.WriteLine("M7 => INCREMENT_A CLEAR");
+                    Console.WriteLine();
+                    selectedMemorySetup = M7;
+                    Programa();
+                    break;
+            }           
+        }
+
+        static void Programa()
         {
             PrintMemory(selectedMemorySetup, "INICIAL");
             PrintFlags("INICIAIS");
@@ -149,7 +227,7 @@ namespace VirtualCPU
             PrintMemory(selectedMemorySetup, "FINAL");
             PrintFlags("FINAIS");
             PrintRegisters("FINAIS");
-            
+
             Console.WriteLine();
             Console.WriteLine("Aperte qualquer tecla para continuar");
             Console.ReadLine();
