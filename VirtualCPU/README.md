@@ -14,7 +14,7 @@ No código fonte, existem 7 módulos de memória contendo instruções que podem
 | Memória | Operação | 
 |---------|----------|
 | M1    | ADD      |
-|M2  |SUD|
+|M2  |SUB|
 |M3  |AND|
 |M4  |OR|
 |M5  |XOR|
