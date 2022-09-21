@@ -13,7 +13,7 @@ namespace Interpreter
         static int data; // mantém o operando corrente
         static bool run_bit = false; // um bit que pode ser desligado para parar a máquina
         const int CLR = 1000;// <-- seta o valor no accumulator para 0
-        const int ADDI = 1005;// <-- adiciona o valor x no accumulator
+        const int ADDI = 1001;// <-- adiciona o valor x no accumulator
         const int ADDM = 1010;// <-- adiciona o valor da memória y no accumulator
         const int HALT = 1100;// <-- instrução que desliga o processador
 
